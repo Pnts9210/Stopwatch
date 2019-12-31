@@ -1,0 +1,5 @@
+﻿Gör en class i app.js
+Gör två variabler, ena får sitt värde i startögonblicket och den andra
+ löper helatiden.
+logiskt så kör Date.now() när start trycks och skriv ut värdet av
+Date.now() minus Date.now() varje sekund med setInterval().
