@@ -20,7 +20,6 @@ class Stopwatch extends React.Component {
   state = {
     status: false,
     runningTime: 0,
-    sec: 0
   };
 
   constructor(props) {
@@ -28,13 +27,15 @@ class Stopwatch extends React.Component {
     this.timer = null
   }
 
+  //läs mer på upg 03.3 date link
+
   startTimer = () => {
-    const startTime = Date.now() - this.state.runningTime;  //tar date.now och börjar om från nu
+    const startTime = Date.now() - this.state.runningTime;
     this.timer = setInterval(() => {
       this.setState({ runningTime: Date.now() - startTime });
-    });    
+    });
   }
-  
+
   handleClick = () => {
     this.setState(state => {
       if (state.status) {
@@ -47,23 +48,21 @@ class Stopwatch extends React.Component {
   };
 
   handleReset = () => {
-    clearInterval(this.timer);    //-----clearInterval - Onödig?
+    clearInterval(this.timer);
     this.setState({ runningTime: 0, status: false });
   };
 
-  componentWillUnmount() {        //----- Varför?
-    clearInterval(this.timer);
-  }
+
   render() {
 
     const millis = this.state.runningTime % 1000
-    const seconds = Math.floor(this.state.runningTime / 1000) % 60
-    const min = Math.floor(this.state.runningTime  / 60000) % 60
-    const hours = Math.floor(this.state.runningTime / (60*60*1000))
-//    const { status, runningTime } = this.state;
+    const seconds = ("0" + Math.floor(this.state.runningTime / 1000) % 60).slice(-2)
+    const min = ("0" + Math.floor(this.state.runningTime / 60000) % 60).slice(-2)
+    const hours = ("0" + Math.floor(this.state.runningTime / (60 * 60 * 1000))).slice(-2)
+
     return (
       <div>
-        <h1>{hours}:{min}:{seconds}<span id = "millis">{millis}</span></h1>
+        <h1>{hours}:{min}:{seconds}<span id="millis">{millis}</span></h1>
         <button onClick={this.handleClick}> {this.state.status ? 'Stop' : 'Start'} </button>
         <button onClick={this.handleReset}>Reset</button>
       </div>
